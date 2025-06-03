@@ -48,42 +48,50 @@ class _RegisterPageState extends State<RegisterPage> {
       return;
     }
 
-    final res = await http.post(
-      Uri.parse(
-          'https://peaksmartth-production.up.railway.app/api/auth/register'),
-      headers: {'Content-Type': 'application/json'},
-      body: json.encode({
-        'username': _usernameController.text.trim(),
-        'email': _emailController.text.trim(),
-        'password': _passwordController.text.trim(),
-      }),
-    );
+    try {
+      final res = await http.post(
+        Uri.parse(
+            'https://peaksmartth-production.up.railway.app/api/auth/register'),
+        headers: {'Content-Type': 'application/json'},
+        body: json.encode({
+          'username': _usernameController.text.trim(),
+          'email': _emailController.text.trim(),
+          'password': _passwordController.text.trim(),
+        }),
+      );
 
-    if (res.statusCode == 200) {
-      final responseData = json.decode(res.body); // Get response
-      final userId = responseData['userId']; // Extract userId from the response
+      print('Response status: ${res.statusCode}');
+      print('Response body: ${res.body}');
 
-      if (userId != null) {
-        // Pass userId along with other data to the next screen
-        Navigator.push(
-          context,
-          MaterialPageRoute(
-            builder: (context) => ProviderSelectionScreen(
-              username: _usernameController.text.trim(),
-              email: _emailController.text.trim(),
-              userId:
-                  userId, // Pass the userId here (from registration response)
+      if (res.statusCode == 201) {
+        final responseData = json.decode(res.body);
+        final userId = responseData['userId'];
+
+        if (userId != null) {
+          if (!mounted) return;
+          Navigator.push(
+            context,
+            MaterialPageRoute(
+              builder: (context) => ProviderSelectionScreen(
+                username: _usernameController.text.trim(),
+                email: _emailController.text.trim(),
+                userId: userId,
+              ),
             ),
-          ),
-        );
+          );
+        } else {
+          setState(() {
+            _message = 'Registration failed: No user ID returned';
+          });
+        }
       } else {
         setState(() {
-          _message = 'Registration failed: No user ID returned';
+          _message = 'Registration failed: ${res.statusCode}';
         });
       }
-    } else {
+    } catch (e) {
       setState(() {
-        _message = 'Registration failed: ${res.statusCode}';
+        _message = 'An error occurred: $e';
       });
     }
   }
@@ -283,6 +291,20 @@ class _RegisterPageState extends State<RegisterPage> {
                         fontWeight: FontWeight.w500,
                         fontSize: 12,
                         color: Color(0xFFFF0000),
+                      ),
+                    ),
+                  ),
+
+                if (_message.isNotEmpty)
+                  Padding(
+                    padding: const EdgeInsets.only(top: 12),
+                    child: Text(
+                      _message,
+                      style: const TextStyle(
+                        fontFamily: 'Inter',
+                        fontWeight: FontWeight.w600,
+                        fontSize: 14,
+                        color: Colors.red,
                       ),
                     ),
                   ),
