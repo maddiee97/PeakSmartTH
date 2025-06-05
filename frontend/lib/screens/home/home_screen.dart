@@ -51,7 +51,7 @@ class HomeScreen extends StatelessWidget {
                             Navigator.pushNamed(context, '/settings');
                           },
                           child: Image.asset(
-                            'assets/icons/settings.png',
+                            'assets/icons/settingsicon.png',
                             fit: BoxFit.contain,
                           ),
                         ),
@@ -64,7 +64,7 @@ class HomeScreen extends StatelessWidget {
                           height: 45,
                           width: 45,
                           child: Image.asset(
-                            'assets/icons/energytip.png',
+                            'assets/icons/energytipseditor.png',
                             fit: BoxFit.contain,
                           ),
                         ),

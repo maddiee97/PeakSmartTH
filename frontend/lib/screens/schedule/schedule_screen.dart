@@ -91,7 +91,7 @@ class _ScheduleScreenState extends State<ScheduleScreen> {
                         Navigator.pushNamed(context, '/settings');
                       },
                       child: Image.asset(
-                        'assets/icons/settings.png',
+                        'assets/icons/settingsicon.png',
                         fit: BoxFit.contain,
                       ),
                     ),
@@ -104,7 +104,7 @@ class _ScheduleScreenState extends State<ScheduleScreen> {
                       height: 45,
                       width: 45,
                       child: Image.asset(
-                        'assets/icons/energytip.png',
+                        'assets/icons/energytipseditor.png',
                         fit: BoxFit.contain,
                       ),
                     ),

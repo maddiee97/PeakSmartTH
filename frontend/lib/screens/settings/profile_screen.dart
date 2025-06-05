@@ -49,7 +49,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
               Navigator.pushNamed(context, '/settings');
             },
             child: Image.asset(
-              'assets/icons/settings.png',
+              'assets/icons/settingsicon.png',
               width: 45,
               height: 45,
             ),
@@ -65,7 +65,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
               child: SizedBox(
                 height: 45,
                 width: 45,
-                child: Image.asset('assets/icons/energytip.png'),
+                child: Image.asset('assets/icons/energytipseditor.png'),
               ),
             ),
           ),
