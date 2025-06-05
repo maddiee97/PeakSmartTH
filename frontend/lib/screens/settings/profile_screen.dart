@@ -48,7 +48,11 @@ class _ProfileScreenState extends State<ProfileScreen> {
             onTap: () {
               Navigator.pushNamed(context, '/settings');
             },
-            child: const Icon(Icons.settings, color: Colors.black, size: 30),
+            child: Image.asset(
+              'assets/icons/settings.png',
+              width: 45,
+              height: 45,
+            ),
           ),
         ),
         actions: [
@@ -59,9 +63,9 @@ class _ProfileScreenState extends State<ProfileScreen> {
                 Navigator.pushNamed(context, '/energy-tips');
               },
               child: SizedBox(
-                height: 40,
-                width: 35,
-                child: Image.asset('assets/icons/EnergyTips.png'),
+                height: 45,
+                width: 45,
+                child: Image.asset('assets/icons/energytip.png'),
               ),
             ),
           ),
@@ -77,7 +81,8 @@ class _ProfileScreenState extends State<ProfileScreen> {
                 radius: 54,
                 backgroundImage: _avatarImage != null
                     ? FileImage(_avatarImage!)
-                    : const AssetImage('assets/avatar.png') as ImageProvider,
+                    : const AssetImage('assets/images/avatar.png')
+                        as ImageProvider,
               ),
               GestureDetector(
                 onTap: _pickImage,
@@ -146,8 +151,17 @@ class _ProfileScreenState extends State<ProfileScreen> {
         ],
       ),
       bottomNavigationBar: Container(
-        padding: const EdgeInsets.symmetric(horizontal: 50, vertical: 12),
-        color: const Color(0xFFFBF8F0),
+        padding: const EdgeInsets.symmetric(horizontal: 40, vertical: 12),
+        decoration: BoxDecoration(
+          color: Colors.white,
+          boxShadow: [
+            BoxShadow(
+              color: Colors.black.withOpacity(0.05),
+              blurRadius: 12,
+              offset: const Offset(0, -2),
+            ),
+          ],
+        ),
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
@@ -169,8 +183,8 @@ class _ProfileScreenState extends State<ProfileScreen> {
               icon: Image.asset(
                 'assets/icons/Home.png',
                 color: const Color(0xFFABABAB),
-                height: 32,
-                width: 32,
+                height: 36,
+                width: 36,
               ),
             ),
             IconButton(
@@ -180,8 +194,8 @@ class _ProfileScreenState extends State<ProfileScreen> {
               icon: Image.asset(
                 'assets/icons/activeprofile.png',
                 color: const Color(0xFF366D34),
-                height: 30,
-                width: 30,
+                height: 32,
+                width: 32,
               ),
             ),
           ],

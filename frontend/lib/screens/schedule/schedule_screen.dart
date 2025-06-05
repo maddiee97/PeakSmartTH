@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'calendar_widget.dart'; // Your calendar widget file
 
 class ScheduleScreen extends StatefulWidget {
@@ -58,36 +59,52 @@ class _ScheduleScreenState extends State<ScheduleScreen> {
       return 'No Holiday';
     }
 
-    return Scaffold(
-      backgroundColor: const Color(0xFFFBF8F0),
-      body: SafeArea(
-        child: Column(
+    return AnnotatedRegion<SystemUiOverlayStyle>(
+      value: SystemUiOverlayStyle.light, // white icons for status bar
+      child: Scaffold(
+        backgroundColor: const Color(0xFFFBF8F0),
+        body: Column(
           children: [
-            // Top bar with settings and energy tips icons
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 10),
+            // Top green container with manual top padding instead of SafeArea
+            Container(
+              width: double.infinity,
+              padding: const EdgeInsets.fromLTRB(
+                  20, 40, 20, 24), // 40 to avoid status bar
+              decoration: const BoxDecoration(
+                color: Color(0xFF356C33),
+                boxShadow: [
+                  BoxShadow(
+                    color: Colors.black12,
+                    blurRadius: 10,
+                    offset: Offset(0, 4),
+                  ),
+                ],
+              ),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  // Settings icon top-left
-                  IconButton(
-                    icon: const Icon(Icons.settings,
-                        color: Colors.black, size: 30),
-                    onPressed: () {
-                      Navigator.pushNamed(context, '/settings');
-                    },
+                  SizedBox(
+                    height: 45,
+                    width: 45,
+                    child: InkWell(
+                      onTap: () {
+                        Navigator.pushNamed(context, '/settings');
+                      },
+                      child: Image.asset(
+                        'assets/icons/settings.png',
+                        fit: BoxFit.contain,
+                      ),
+                    ),
                   ),
-
-                  // EnergyTips icon top-right
                   GestureDetector(
                     onTap: () {
                       Navigator.pushNamed(context, '/energy-tips');
                     },
                     child: SizedBox(
-                      height: 40,
-                      width: 35,
+                      height: 45,
+                      width: 45,
                       child: Image.asset(
-                        'assets/icons/EnergyTips.png',
+                        'assets/icons/energytip.png',
                         fit: BoxFit.contain,
                       ),
                     ),
@@ -96,11 +113,12 @@ class _ScheduleScreenState extends State<ScheduleScreen> {
               ),
             ),
 
-            // Main content container
+            const SizedBox(height: 30),
+
             Center(
               child: Container(
                 width: 364,
-                height: 670, // Increased height
+                height: 612,
                 padding: const EdgeInsets.all(16),
                 decoration: BoxDecoration(
                   color: const Color(0xFFF8F2E5),
@@ -177,7 +195,7 @@ class _ScheduleScreenState extends State<ScheduleScreen> {
                               crossAxisAlignment: CrossAxisAlignment.center,
                               children: [
                                 SizedBox(
-                                  width: 60, // fixed width for alignment
+                                  width: 60,
                                   child: Text(
                                     time,
                                     style: const TextStyle(
@@ -188,7 +206,7 @@ class _ScheduleScreenState extends State<ScheduleScreen> {
                                     ),
                                   ),
                                 ),
-                                const SizedBox(width: 32), // moved a bit right
+                                const SizedBox(width: 32),
                                 Text(
                                   peak ? 'Peak Hour' : 'Off-Peak Hour',
                                   style: TextStyle(
@@ -225,46 +243,55 @@ class _ScheduleScreenState extends State<ScheduleScreen> {
             ),
           ],
         ),
-      ),
-      bottomNavigationBar: Container(
-        padding: const EdgeInsets.symmetric(horizontal: 40, vertical: 8),
-        color: const Color(0xFFFBF8F0),
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
-            IconButton(
-              onPressed: () {
-                // Already on Schedule screen
-              },
-              icon: Image.asset(
-                'assets/icons/activecalendar.png',
-                width: 31.61,
-                height: 31.87,
+        bottomNavigationBar: Container(
+          padding: const EdgeInsets.symmetric(horizontal: 40, vertical: 12),
+          decoration: BoxDecoration(
+            color: Colors.white,
+            boxShadow: [
+              BoxShadow(
+                color: Colors.black.withOpacity(0.05),
+                blurRadius: 12,
+                offset: const Offset(0, -2),
               ),
-            ),
-            IconButton(
-              onPressed: () {
-                Navigator.pushNamed(context, '/home');
-              },
-              icon: Image.asset(
-                'assets/icons/Home.png',
-                width: 38,
-                height: 42,
-                color: const Color(0xFFABABAB),
+            ],
+          ),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              IconButton(
+                onPressed: () {
+                  // Already on Schedule screen
+                },
+                icon: Image.asset(
+                  'assets/icons/activecalendar.png',
+                  width: 34,
+                  height: 34,
+                ),
               ),
-            ),
-            IconButton(
-              onPressed: () {
-                Navigator.pushNamed(context, '/profile');
-              },
-              icon: Image.asset(
-                'assets/icons/profile.png',
-                width: 22.41,
-                height: 23.53,
-                color: const Color(0xFFABABAB),
+              IconButton(
+                onPressed: () {
+                  Navigator.pushNamed(context, '/home');
+                },
+                icon: Image.asset(
+                  'assets/icons/Home.png',
+                  width: 38,
+                  height: 42,
+                  color: const Color(0xFFABABAB),
+                ),
               ),
-            ),
-          ],
+              IconButton(
+                onPressed: () {
+                  Navigator.pushNamed(context, '/profile');
+                },
+                icon: Image.asset(
+                  'assets/icons/profile.png',
+                  width: 22.41,
+                  height: 23.53,
+                  color: const Color(0xFFABABAB),
+                ),
+              ),
+            ],
+          ),
         ),
       ),
     );
