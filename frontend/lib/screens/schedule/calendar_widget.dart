@@ -15,19 +15,19 @@ class CalendarWidget extends StatelessWidget {
   String _weekdayAbbr(int weekday) {
     switch (weekday) {
       case DateTime.monday:
-        return 'Mo';
+        return 'Mon';
       case DateTime.tuesday:
-        return 'Tu';
+        return 'Tue';
       case DateTime.wednesday:
-        return 'We';
+        return 'Wed';
       case DateTime.thursday:
-        return 'Th';
+        return 'Thu';
       case DateTime.friday:
-        return 'Fr';
+        return 'Fri';
       case DateTime.saturday:
-        return 'Sa';
+        return 'Sat';
       case DateTime.sunday:
-        return 'Su';
+        return 'Sun';
       default:
         return '';
     }

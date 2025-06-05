@@ -44,8 +44,8 @@ class HomeScreen extends StatelessWidget {
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       SizedBox(
-                        height: 45,
-                        width: 45,
+                        height: 47,
+                        width: 47,
                         child: InkWell(
                           onTap: () {
                             Navigator.pushNamed(context, '/settings');
@@ -61,8 +61,8 @@ class HomeScreen extends StatelessWidget {
                           Navigator.pushNamed(context, '/energy-tips');
                         },
                         child: SizedBox(
-                          height: 45,
-                          width: 45,
+                          height: 43,
+                          width: 43,
                           child: Image.asset(
                             'assets/icons/energytipseditor.png',
                             fit: BoxFit.contain,

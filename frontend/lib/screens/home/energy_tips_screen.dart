@@ -393,8 +393,8 @@ class _EnergyTipsScreenState extends State<EnergyTipsScreen> {
                         });
                       },
                       child: Container(
-                        width: 48,
-                        height: 48,
+                        width: 60,
+                        height: 60,
                         decoration: BoxDecoration(
                           color: const Color(0xFF366D34),
                           shape: BoxShape.circle,
@@ -409,8 +409,8 @@ class _EnergyTipsScreenState extends State<EnergyTipsScreen> {
                         child: Center(
                           child: Image.asset(
                             'assets/icons/donedit.png',
-                            width: 24,
-                            height: 24,
+                            width: 32,
+                            height: 32,
                           ),
                         ),
                       ),

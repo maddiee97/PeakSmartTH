@@ -43,28 +43,28 @@ class _ProfileScreenState extends State<ProfileScreen> {
         backgroundColor: Colors.transparent,
         elevation: 0,
         leading: Padding(
-          padding: const EdgeInsets.only(left: 12),
+          padding: const EdgeInsets.only(left: 8),
           child: GestureDetector(
             onTap: () {
               Navigator.pushNamed(context, '/settings');
             },
             child: Image.asset(
               'assets/icons/settingsicon.png',
-              width: 45,
-              height: 45,
+              width: 60,
+              height: 60,
             ),
           ),
         ),
         actions: [
           Padding(
-            padding: const EdgeInsets.only(right: 12.0),
+            padding: const EdgeInsets.only(right: 6),
             child: GestureDetector(
               onTap: () {
                 Navigator.pushNamed(context, '/energy-tips');
               },
               child: SizedBox(
-                height: 45,
-                width: 45,
+                height: 55,
+                width: 55,
                 child: Image.asset('assets/icons/energytipseditor.png'),
               ),
             ),
@@ -125,7 +125,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
           ),
           const Spacer(),
           Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 40, vertical: 20),
+            padding: const EdgeInsets.symmetric(horizontal: 40, vertical: 30),
             child: OutlinedButton(
               onPressed: () {
                 // TODO: Add logout logic here
