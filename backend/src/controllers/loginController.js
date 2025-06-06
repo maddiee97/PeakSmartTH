@@ -25,8 +25,8 @@ const login = async (req, res) => {
       provider: user.provider || 'PEA',
     });
   } catch (err) {
-    console.error('Login error:', err); // ⬅ print full error
-    res.status(500).json({ message: 'Server error' });
+  console.error('Login error:', err); // ← add this
+  res.status(500).json({ message: 'Server error' });
   }
 };
 
