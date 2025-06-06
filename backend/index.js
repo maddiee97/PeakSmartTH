@@ -5,18 +5,25 @@ require('dotenv').config();
 
 const app = express();
 
+// Middlewares
 app.use(cors());
-app.use(express.json());  // This is needed to parse JSON bodies
+app.use(express.json()); // Parses JSON request bodies
 
+// Logger (optional - can remove in production)
 app.use((req, res, next) => {
-  console.log('Request body:', req.body);
+  console.log(`Request: ${req.method} ${req.url}`);
+  console.log('Body:', req.body);
   next();
 });
 
-const authRoutes = require('./src/routes/authRoutes'); // your routes file path
+// Routes
+const authRoutes = require('./src/routes/authRoutes');
+const userRoutes = require('./src/routes/userRoutes'); // ✅ new user route
 
 app.use('/api/auth', authRoutes);
+app.use('/api/users', userRoutes); // ✅ added user route
 
+// DB + Server
 const PORT = process.env.PORT || 3000;
 
 mongoose.connect(process.env.MONGODB_URI)
@@ -24,5 +31,5 @@ mongoose.connect(process.env.MONGODB_URI)
   .catch((err) => console.error('MongoDB connection error:', err));
 
 app.listen(PORT, () => {
-  console.log(`Server running on port ${PORT}`);
+  console.log(`🚀 Server running on port ${PORT}`);
 });

@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
-import 'register_screen.dart';
 import 'dart:convert';
 import 'package:http/http.dart' as http;
+import 'register_screen.dart';
+import 'package:peaksmart_app/screens/home/main_screen.dart'; // <- make sure this path is correct
+import 'package:shared_preferences/shared_preferences.dart';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({super.key});
@@ -16,14 +18,14 @@ class _LoginScreenState extends State<LoginScreen> {
   bool _obscurePassword = true;
 
   String _message = '';
+
   Future<void> _login() async {
     setState(() {
       _message = '';
     });
 
     final res = await http.post(
-      Uri.parse(
-          'https://peaksmartth-production.up.railway.app/login'), // Use your Railway URL here
+      Uri.parse('https://peaksmartth-production.up.railway.app/api/auth/login'),
       headers: {'Content-Type': 'application/json'},
       body: json.encode({
         'email': _emailController.text.trim(),
@@ -35,14 +37,28 @@ class _LoginScreenState extends State<LoginScreen> {
       final data = json.decode(res.body);
 
       if (data['token'] != null) {
-        // Successful login
         final username = data['username'] ?? '';
+        final provider = data['provider'] ?? '';
+        final email = _emailController.text.trim();
 
-        Navigator.pushReplacementNamed(context, '/home', arguments: {
-          'username': username,
-          'email': _emailController.text.trim(),
-          'token': data['token'],
-        });
+        // ✅ Store user session
+        final prefs = await SharedPreferences.getInstance();
+        await prefs.setString('token', data['token']);
+        await prefs.setString('username', username);
+        await prefs.setString('email', email);
+        await prefs.setString('provider', provider);
+
+        // Navigate to main app
+        Navigator.pushReplacement(
+          context,
+          MaterialPageRoute(
+            builder: (_) => MainScreen(
+              username: username,
+              email: email,
+              provider: provider,
+            ),
+          ),
+        );
       } else {
         setState(() {
           _message = 'Login failed: token missing.';

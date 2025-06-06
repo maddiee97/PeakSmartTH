@@ -2,32 +2,32 @@ const bcrypt = require('bcryptjs');
 const User = require('../models/userModel'); // Ensure this path is correct
 
 const register = async (req, res) => {
-     console.log('Register endpoint hit');
+  console.log('Register endpoint hit');
   const { username, email, password } = req.body;
 
   try {
-    // Check if the email already exists in the database
     const userExists = await User.findOne({ email });
     if (userExists) return res.status(400).json({ message: 'Email already exists' });
 
-    // Create a new user (without provider)
-    const newUser = new User({
-      username,
-      email,
-      password,
-    });
+    // ✅ Match frontend validation:
+    const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d).{8,}$/;
+    if (!passwordRegex.test(password)) {
+      return res.status(400).json({
+        message: 'Password must be at least 8 characters, include 1 uppercase letter, 1 lowercase letter, and 1 number.',
+      });
+    }
 
-    // Hash the password before saving
+    const newUser = new User({ username, email, password });
+
     const salt = await bcrypt.genSalt(10);
     newUser.password = await bcrypt.hash(password, salt);
 
     await newUser.save();
 
-    // Send the user ID along with a success message
     res.status(201).json({
       success: true,
       message: 'User registered successfully.',
-      userId: newUser._id, // Send user ID
+      userId: newUser._id,
     });
   } catch (err) {
     res.status(500).json({ message: 'Server error' });
